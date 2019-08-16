@@ -34,7 +34,7 @@ else:
     Tensor = torch.cuda.FloatTensor
     
     
-###########################################################################################
+############################################ loading model checkpoints ###############################################
 
 f_rnn = torch.load('final_f_rnn.pt')
 b_rnn = torch.load('final_b_rnn.pt')
@@ -44,7 +44,7 @@ if train_on_gpu:
     b_rnn.cuda()
     cnn_model.cuda()
 
-#########################################################################################
+########################################################################################################################
 def detect_image(img):
     ratio = min(img_size/img.size[0], img_size/img.size[1])
     imw = round(img.size[0] * ratio)
@@ -97,7 +97,8 @@ def get_video_frames(video_path):
     x1 = 300
     idx=0
     n = 0
-
+	######################################################################################################
+	#Extracting video frames  and cropped person bounding
     while(True):
         ret, frame = cap.read()
         
@@ -190,14 +191,16 @@ def inferOnVideo(video_path):
     outputf, outputb = RNN_pass(data_sequences, reversed_sequences)
     rNpArr = np.flip(outputb.cpu().numpy(),0).copy()   
     outputb = torch.from_numpy(rNpArr).to(device)
-    final_out = (outputf + outputb) / 2
+	
+	output6 = F.log_softmax(cnn_out6, dim=1)
+    final_out = (outputf + outputb+output6) / 3
     _, pred = torch.max(final_out, 1)
     final_pred = torch.zeros(count)
     
     for i,p in enumerate(pred):
         final_pred[i*2:i*2+2] = p
         
-    return final_pred.numpy()
+    return final_pred.numpy().astype('uint16')
     
 
 
