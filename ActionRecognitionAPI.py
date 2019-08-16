@@ -192,7 +192,7 @@ def inferOnVideo(video_path):
     rNpArr = np.flip(outputb.cpu().numpy(),0).copy()   
     outputb = torch.from_numpy(rNpArr).to(device)
 	
-	output6 = F.log_softmax(cnn_out6, dim=1)
+    output6 = F.log_softmax(cnn_out6, dim=1)
     final_out = (outputf + outputb+output6) / 3
     _, pred = torch.max(final_out, 1)
     final_pred = torch.zeros(count)
