@@ -38,7 +38,7 @@ else:
 
 f_rnn = torch.load('f_rnn130_2l_30e_f.pt')
 b_rnn = torch.load('b_rnn130_2l_30e_b.pt')
-cnn_model = torch.load('ensembledModel.jfc_6%2C200_115e.pt',map_location = 'cpu')
+cnn_model = torch.load('ensembledModel.jfc_6,200_115e.pt',map_location = 'cpu')
 if train_on_gpu:
     f_rnn.cuda()
     b_rnn.cuda()
