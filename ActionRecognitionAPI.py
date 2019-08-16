@@ -36,9 +36,9 @@ else:
     
 ############################################ loading model checkpoints ###############################################
 
-f_rnn = torch.load('final_f_rnn.pt')
-b_rnn = torch.load('final_b_rnn.pt')
-cnn_model = torch.load('ensembledModel.jfc_6,200_95e.pt',map_location = 'cpu')
+f_rnn = torch.load('f_rnn130_2l_30e_f.pt')
+b_rnn = torch.load('b_rnn130_2l_30e_b.pt')
+cnn_model = torch.load('ensembledModel.jfc_6%2C200_115e.pt',map_location = 'cpu')
 if train_on_gpu:
     f_rnn.cuda()
     b_rnn.cuda()
